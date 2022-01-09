@@ -4,7 +4,7 @@ import re
 
 import praw
 
-from src.utils import download
+from utils import download
 
 
 class RedditImageScraper:
@@ -22,7 +22,7 @@ class RedditImageScraper:
 
     def does_submission_pass_rules(self, submission):
         return not submission.stickied and submission.over_18 == self.nsfw \
-               and submission.url.endswith(('jpg', 'jpeg', 'png'))
+            and submission.url.endswith(('jpg', 'jpeg', 'png'))
 
     def get_images(self):
         """
@@ -42,11 +42,13 @@ class RedditImageScraper:
             for submission in submissions:
                 if self.does_submission_pass_rules(submission):
                     print(self.path)
-                    file_name = re.search('(?s:.*)\w/(.*)', submission.url).group(1)
+                    file_name = re.search(
+                        '(?s:.*)\w/(.*)', submission.url).group(1)
                     root_path = self.path + file_name.split('.')[0]
-                    file_path = root_path + "/image."+ file_name.split('.')[1]
+                    file_path = root_path + "/image." + file_name.split('.')[1]
                     if not os.path.isfile(file_path):
-                        images.append({'url': submission.url, 'file_path': file_path, 'root_path': root_path})
+                        images.append(
+                            {'url': submission.url, 'file_path': file_path, 'root_path': root_path})
                         go += 1
                         if go >= self.limit:
                             break

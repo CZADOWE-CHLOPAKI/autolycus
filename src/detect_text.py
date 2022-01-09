@@ -19,11 +19,11 @@ def detect_text(path):
 
     # for text in texts:
     #     print('\n"{}"'.format(text.description))
-        #
-        # vertices = (['({},{})'.format(vertex.x, vertex.y)
-        #             for vertex in text.bounding_poly.vertices])
-        #
-        # print('bounds: {}'.format(','.join(vertices)))
+    #
+    # vertices = (['({},{})'.format(vertex.x, vertex.y)
+    #             for vertex in text.bounding_poly.vertices])
+    #
+    # print('bounds: {}'.format(','.join(vertices)))
 
     if response.error.message:
         raise Exception(
