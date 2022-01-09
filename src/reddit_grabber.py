@@ -41,7 +41,6 @@ class RedditImageScraper:
 
             for submission in submissions:
                 if self.does_submission_pass_rules(submission):
-                    print(self.path)
                     file_name = re.search(
                         '(?s:.*)\w/(.*)', submission.url).group(1)
                     root_path = self.path + file_name.split('.')[0]

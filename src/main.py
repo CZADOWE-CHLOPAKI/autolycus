@@ -11,12 +11,15 @@ def main():
     # detect_text()
     # upload_file('test1.mov', 'test 2 aajdsakha',
     #             'typical descrition', ['tag2', 'tag1'], 'public')
-    image_paths = RedditImageScraper(limit=5, order="hot").get_images()
-    # print(image_paths)
+    image_paths = RedditImageScraper(limit=10, order="hot").get_images()
+    loading = 0
     for path in image_paths:
         text = detect_text(path["file_path"])
+        text = repr(text).replace("\n", ".", -1)
         if text != "":
             text_to_speech(text, path["root_path"])
+        loading += 1
+        print(f"{int((loading / len(image_paths) * 100))} %")
 
     assemble_video(image_paths)
 
