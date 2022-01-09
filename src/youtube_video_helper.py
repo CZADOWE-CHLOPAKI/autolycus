@@ -1,10 +1,13 @@
 import datetime
+
+from typing import List
+
 from Google import Create_Service
 from googleapiclient.http import MediaFileUpload
 import os
 
 
-def upload_file(filename: str, title: str, description: str, tags: list[str], privacy_status: str):
+def upload_file(filename: str, title: str, description: str, tags: List[str], privacy_status: str):
     CLIENT_SECRET_FILE = os.getenv('GOOGLE_CLIENT_SECRETS')
     API_NAME = 'youtube'
     API_VERSION = 'v3'

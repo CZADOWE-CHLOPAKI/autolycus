@@ -52,4 +52,4 @@ class RedditImageScraper:
                 download(image["url"], image["file_name"])
         except Exception as e:
             print(e)
-        return [img['file_name'].replace(self.path, "") for img in images]
+        return [img['file_name'] for img in images]
