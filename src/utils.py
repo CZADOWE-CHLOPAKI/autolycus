@@ -1,7 +1,6 @@
 import requests
 
-
-def download(metadata):
-    r = requests.get(metadata['url'])
-    with open(metadata["file_name"]) as f:
+def download(image):
+    r = requests.get(image['url'])
+    with open(image['fname'], 'wb') as f:
         f.write(r.content)

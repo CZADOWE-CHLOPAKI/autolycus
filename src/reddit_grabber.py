@@ -9,12 +9,11 @@ import praw
 from src.utils import download
 
 
-# code definitely not stolen from the depths of the internet
-class RedditImageScraper:
-    def __init__(self, subreddit, limit, order, nsfw=False):
+class redditImageScraper:
+    def __init__(self, sub, limit, order, nsfw=False):
         config = configparser.ConfigParser()
         config.read('config.ini')
-        self.sub = subreddit
+        self.sub = sub
         self.limit = limit
         self.order = order
         self.nsfw = nsfw
@@ -31,15 +30,15 @@ class RedditImageScraper:
                 submissions = self.reddit.subreddit(self.sub).hot(limit=None)
             elif self.order == 'top':
                 submissions = self.reddit.subreddit(self.sub).top(limit=None)
-            else:  # sort by new
+            elif self.order == 'new':
                 submissions = self.reddit.subreddit(self.sub).new(limit=None)
 
             for submission in submissions:
                 if not submission.stickied and submission.over_18 == self.nsfw \
                         and submission.url.endswith(('jpg', 'jpeg', 'png')):
-                    file_name = self.path + re.search('(?s:.*)\w/(.*)', submission.url).group(1)
-                    if not os.path.isfile(file_name):
-                        images.append({'url': submission.url, 'file_name': file_name})
+                    fname = self.path + re.search('(?s:.*)\w/(.*)', submission.url).group(1)
+                    if not os.path.isfile(fname):
+                        images.append({'url': submission.url, 'fname': fname})
                         go += 1
                         if go >= self.limit:
                             break
@@ -58,10 +57,9 @@ def main():
     required_args.add_argument('-s', type=str, help="subreddit", required=True)
     required_args.add_argument('-i', type=int, help="number of images", required=True)
     required_args.add_argument('-o', type=str, help="order (new/top/hot)", required=True)
-
     args = parser.parse_args()
 
-    scraper = RedditImageScraper(args.s, args.i, args.o)
+    scraper = redditImageScraper(args.s, args.i, args.o)
     scraper.start()
 
 
