@@ -49,3 +49,4 @@ def assemble_video(image_paths):
     cmd = 'ffmpeg -y -i project.mp4 -i audio.wav -c:v copy -c:a aac output.mp4'
     subprocess.call(cmd, shell=True)
     print('Your memes are done my master1! UwU')
+    return "project.mp4"

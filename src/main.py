@@ -8,19 +8,20 @@ from detect_text import detect_text
 
 def main():
     load_dotenv()
-    image_paths = RedditImageScraper(limit=5, order="hot").get_images()
-    # print(image_paths)
+    image_paths = RedditImageScraper(limit=10, order="hot").get_images()
     loading = 0
     for path in image_paths:
         text = detect_text(path["file_path"])
         text = repr(text).replace("\n", ".", -1)
-        print(text)
         if text != "":
             text_to_speech(text, path["root_path"])
         loading += 1
         print(f"{int((loading / len(image_paths) * 100))} %")
 
-    assemble_video(image_paths)
+    gotowe_path = assemble_video(image_paths)
+
+    upload_file(gotowe_path, '[FUNNY] #Shorts',
+                'typical smiezne sfilmiki fajne smizenesze descrition', ['zabawa', 'smiechawa', 'super XD'], 'public')
 
 
 if __name__ == '__main__':
