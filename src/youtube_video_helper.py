@@ -1,13 +1,10 @@
 import datetime
 from Google import Create_Service
 from googleapiclient.http import MediaFileUpload
-from dotenv import load_dotenv
 import os
 
 
 def upload_file(filename: str, title: str, description: str, tags: list[str], privacy_status: str):
-    load_dotenv()
-
     CLIENT_SECRET_FILE = os.getenv('GOOGLE_CLIENT_SECRETS')
     API_NAME = 'youtube'
     API_VERSION = 'v3'
