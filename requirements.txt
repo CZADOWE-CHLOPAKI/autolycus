@@ -1,0 +1,9 @@
+certifi
+charset-normalizer
+idna
+praw
+prawcore
+requests
+update-checker
+urllib3
+websocket-client
