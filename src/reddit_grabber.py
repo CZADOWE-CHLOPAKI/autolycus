@@ -42,11 +42,12 @@ class RedditImageScraper:
                         go += 1
                         if go >= self.limit:
                             break
-            if len(images):
-                if not os.path.exists(self.path):
-                    os.makedirs(self.path)
-                with concurrent.futures.ThreadPoolExecutor() as ptolemy:
-                    ptolemy.map(download, images)
+
+            if not os.path.exists(self.path):
+                os.makedirs(self.path)
+            for image in images:
+                download(image)
+        
         except Exception as e:
             print(e)
 
