@@ -1,7 +1,6 @@
 import configparser
 import os
 import re
-from typing import List
 
 import praw
 
@@ -21,7 +20,11 @@ class RedditImageScraper:
                                   client_secret=config['REDDIT']['client_secret'],
                                   user_agent='reddit image downloader')
 
-    def get_images(self) -> List[str]:
+    def does_submission_pass_rules(self, submission):
+        return not submission.stickied and submission.over_18 == self.nsfw \
+               and submission.url.endswith(('jpg', 'jpeg', 'png'))
+
+    def get_images(self):
         """
         Gets images from subreddit.
         Returns array of downloaded filenames.
@@ -33,23 +36,25 @@ class RedditImageScraper:
                 submissions = self.reddit.subreddit(self.sub).hot(limit=None)
             elif self.order == 'top':
                 submissions = self.reddit.subreddit(self.sub).top(limit=None)
-            elif self.order == 'new':
+            else:
                 submissions = self.reddit.subreddit(self.sub).new(limit=None)
 
             for submission in submissions:
-                if not submission.stickied and submission.over_18 == self.nsfw \
-                        and submission.url.endswith(('jpg', 'jpeg', 'png')):
-                    fname = self.path + re.search('(?s:.*)\w/(.*)', submission.url).group(1)
-                    if not os.path.isfile(fname):
-                        images.append({'url': submission.url, 'file_name': fname})
+                if self.does_submission_pass_rules(submission):
+                    print(self.path)
+                    file_name = re.search('(?s:.*)\w/(.*)', submission.url).group(1)
+                    root_path = self.path + file_name.split('.')[0]
+                    file_path = root_path + "/" + file_name
+                    if not os.path.isfile(file_path):
+                        images.append({'url': submission.url, 'file_path': file_path, 'root_path': root_path})
                         go += 1
                         if go >= self.limit:
                             break
 
-            if not os.path.exists(self.path):
-                os.makedirs(self.path)
             for image in images:
-                download(image["url"], image["file_name"])
+                os.makedirs(image["root_path"], exist_ok=True)
+                download(image["url"], image["file_path"])
+
         except Exception as e:
             print(e)
-        return [img['file_name'] for img in images]
+        return images
