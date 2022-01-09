@@ -4,7 +4,7 @@
 *.png
 
 # google api secrets
-client_secrets.json
+secrets/*
 
 # youtube token
 *.pickle
@@ -126,7 +126,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+# .env
 .venv
 env/
 venv/
