@@ -1,8 +1,7 @@
 import pickle
 import os
-from google_auth_oauthlib.flow import Flow, InstalledAppFlow
+from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 from google.auth.transport.requests import Request
 
 
@@ -27,7 +26,8 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes):
         if cred and cred.expired and cred.refresh_token:
             cred.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(
+                CLIENT_SECRET_FILE, SCOPES)
             cred = flow.run_local_server()
 
         with open(pickle_file, 'wb') as token:
@@ -41,6 +41,7 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes):
         print('Unable to connect.')
         print(e)
         return None
+
 
 def convert_to_RFC_datetime(year=1900, month=1, day=1, hour=0, minute=0):
     dt = datetime.datetime(year, month, day, hour, minute, 0).isoformat() + 'Z'

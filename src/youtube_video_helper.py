@@ -1,20 +1,19 @@
 import datetime
 from Google import Create_Service
 from googleapiclient.http import MediaFileUpload
-
-
-CLIENT_SECRET_FILE = 'client_secrets.json'
-API_NAME = 'youtube'
-API_VERSION = 'v3'
-SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
+from dotenv import load_dotenv
+import os
 
 
 def upload_file(filename: str, title: str, description: str, tags: list[str], privacy_status: str):
-    service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+    load_dotenv()
 
-    # its in the past so it uploads as soon as posible
-    upload_date_time = datetime.datetime(
-        2020, 12, 25, 12, 30, 0).isoformat() + '.000Z'
+    CLIENT_SECRET_FILE = os.getenv('GOOGLE_CLIENT_SECRETS')
+    API_NAME = 'youtube'
+    API_VERSION = 'v3'
+    SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
+
+    service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 
     request_body = {
         'snippet': {
@@ -25,7 +24,6 @@ def upload_file(filename: str, title: str, description: str, tags: list[str], pr
         },
         'status': {
             'privacyStatus': privacy_status,
-            'publishAt': upload_date_time,
             'selfDeclaredMadeForKids': False,
         },
         'notifySubscribers': False
