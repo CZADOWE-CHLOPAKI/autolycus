@@ -44,7 +44,7 @@ class RedditImageScraper:
                     print(self.path)
                     file_name = re.search('(?s:.*)\w/(.*)', submission.url).group(1)
                     root_path = self.path + file_name.split('.')[0]
-                    file_path = root_path + "/" + file_name
+                    file_path = root_path + "/image."+ file_name.split('.')[1]
                     if not os.path.isfile(file_path):
                         images.append({'url': submission.url, 'file_path': file_path, 'root_path': root_path})
                         go += 1
