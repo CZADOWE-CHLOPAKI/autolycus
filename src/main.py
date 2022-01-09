@@ -8,9 +8,6 @@ from detect_text import detect_text
 
 def main():
     load_dotenv()
-    # detect_text()
-    # upload_file('test1.mov', 'test 2 aajdsakha',
-    #             'typical descrition', ['tag2', 'tag1'], 'public')
     image_paths = RedditImageScraper(limit=5, order="hot").get_images()
     # print(image_paths)
     for path in image_paths:
