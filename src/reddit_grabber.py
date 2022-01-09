@@ -64,4 +64,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main()  # -s dankmemes -i 10 -o top
