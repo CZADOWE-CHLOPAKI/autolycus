@@ -3,6 +3,9 @@
 *.jpg
 *.png
 
+# google api secrets
+client_secrets.json
+
 # youtube token
 *.pickle
 
