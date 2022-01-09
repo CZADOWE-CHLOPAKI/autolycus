@@ -10,7 +10,7 @@ import argparse
 class redditImageScraper:
     def __init__(self, sub, limit, order, nsfw=False):
         config = configparser.ConfigParser()
-        config.read('conf.ini')
+        config.read('config.ini')
         self.sub = sub
         self.limit = limit
         self.order = order
