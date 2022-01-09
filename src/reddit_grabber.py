@@ -9,7 +9,7 @@ import praw
 from src.utils import download
 
 
-class redditImageScraper:
+class RedditImageScraper:
     def __init__(self, sub, limit, order, nsfw=False):
         config = configparser.ConfigParser()
         config.read('config.ini')
@@ -59,7 +59,7 @@ def main():
     required_args.add_argument('-o', type=str, help="order (new/top/hot)", required=True)
     args = parser.parse_args()
 
-    scraper = redditImageScraper(args.s, args.i, args.o)
+    scraper = RedditImageScraper(args.s, args.i, args.o)
     scraper.start()
 
 
