@@ -20,7 +20,7 @@ def combine_sound(image_paths, start_meme_delay, end_meme_delay):
 
         image_times.append(start_meme_delay+end_meme_delay + len(fragment))
     audio_output.export("audio.wav", format="wav")
-    return audio_output, image_times
+    return image_times
 
 
 def assemble_video(image_paths):
@@ -29,12 +29,14 @@ def assemble_video(image_paths):
 
     resolution = (607, 1080)
 
-    audio_output, image_times_ms = combine_sound()
+    image_times_ms = combine_sound(
+        image_paths, start_meme_delay, end_meme_delay)
 
     img_array = []
     for path in image_paths:
         img = cv2.imread(path['file_path'])
-        img = cv2.resize(img, resolution, interpolation=cv2.INTER_AREA)
+        (width, height, _) = img.shape
+        img = cv2.resize(img, (width, height), interpolation=cv2.INTER_AREA)
         img_array.append(img)
 
     out = cv2.VideoWriter(
