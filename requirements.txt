@@ -23,3 +23,14 @@ six==1.16.0
 toml==0.10.2
 uritemplate==4.1.1
 urllib3==1.26.8
+certifi==2021.10.8
+charset-normalizer==2.0.10
+idna==3.3
+numpy==1.21.5
+opencv-python==4.5.5.62
+praw==7.5.0
+prawcore==2.3.0
+requests==2.27.1
+update-checker==0.18.0
+urllib3==1.26.8
+websocket-client==1.2.3
