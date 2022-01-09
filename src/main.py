@@ -10,9 +10,11 @@ def main():
     load_dotenv()
     image_paths = RedditImageScraper(limit=5, order="hot").get_images()
     # print(image_paths)
+    loading = 0
     for path in image_paths:
         text = detect_text(path["file_path"])
         text = repr(text).replace("\n", ".", -1)
+        print(text)
         if text != "":
             text_to_speech(text, path["root_path"])
         loading += 1

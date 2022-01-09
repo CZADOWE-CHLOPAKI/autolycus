@@ -29,7 +29,8 @@ def assemble_video(image_paths):
 
     resolution = (607, 1080)
 
-    audio_output, image_times_ms = combine_sound()
+    audio_output, image_times_ms = combine_sound(
+        image_paths, start_meme_delay, end_meme_delay)
 
     img_array = []
     for path in image_paths:
