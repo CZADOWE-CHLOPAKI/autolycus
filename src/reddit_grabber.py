@@ -1,8 +1,7 @@
-import argparse
-import concurrent.futures
 import configparser
 import os
 import re
+from typing import List
 
 import praw
 
@@ -10,19 +9,23 @@ from src.utils import download
 
 
 class RedditImageScraper:
-    def __init__(self, sub, limit, order, nsfw=False):
+    def __init__(self, subreddit="dankmemes", limit=10, order="top", nsfw=False):
         config = configparser.ConfigParser()
         config.read('config.ini')
-        self.sub = sub
+        self.sub = subreddit
         self.limit = limit
         self.order = order
         self.nsfw = nsfw
         self.path = f'images/{self.sub}/'
         self.reddit = praw.Reddit(client_id=config['REDDIT']['client_id'],
                                   client_secret=config['REDDIT']['client_secret'],
-                                  user_agent='Multithreaded Reddit Image Downloader v2.0 (by u/impshum)')
+                                  user_agent='reddit image downloader')
 
-    def start(self):
+    def get_images(self) -> List[str]:
+        """
+        Gets images from subreddit.
+        Returns array of downloaded filenames.
+        """
         images = []
         try:
             go = 0
@@ -38,30 +41,15 @@ class RedditImageScraper:
                         and submission.url.endswith(('jpg', 'jpeg', 'png')):
                     fname = self.path + re.search('(?s:.*)\w/(.*)', submission.url).group(1)
                     if not os.path.isfile(fname):
-                        images.append({'url': submission.url, 'fname': fname})
+                        images.append({'url': submission.url, 'file_name': fname})
                         go += 1
                         if go >= self.limit:
                             break
-            if len(images):
-                if not os.path.exists(self.path):
-                    os.makedirs(self.path)
-                with concurrent.futures.ThreadPoolExecutor() as ptolemy:
-                    ptolemy.map(download, images)
+
+            if not os.path.exists(self.path):
+                os.makedirs(self.path)
+            for image in images:
+                download(image["url"], image["file_name"])
         except Exception as e:
             print(e)
-
-
-def main():
-    parser = argparse.ArgumentParser(description='Multithreaded Reddit Image Downloader v2.0 (by u/impshum)')
-    required_args = parser.add_argument_group('required arguments')
-    required_args.add_argument('-s', type=str, help="subreddit", required=True)
-    required_args.add_argument('-i', type=int, help="number of images", required=True)
-    required_args.add_argument('-o', type=str, help="order (new/top/hot)", required=True)
-    args = parser.parse_args()
-
-    scraper = RedditImageScraper(args.s, args.i, args.o)
-    scraper.start()
-
-
-if __name__ == '__main__':
-    main()  # -s dankmemes -i 10 -o top
+        return [img['fname'].replace(self.path, "") for img in images]
