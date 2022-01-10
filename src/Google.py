@@ -5,6 +5,7 @@ from googleapiclient.discovery import build
 from google.auth.transport.requests import Request
 
 from src.config import SECRETS_PATH
+from src.utils import create_path_if_not_exists
 
 
 def Create_Service(client_secret_file, api_name, api_version, *scopes):
@@ -16,9 +17,9 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes):
 
     cred = None
 
-    pickle_file_path = f'{SECRETS_PATH}/token_{API_SERVICE_NAME}_{API_VERSION}.pickle'
+    pickle_file_path = SECRETS_PATH / f'token_{API_SERVICE_NAME}_{API_VERSION}.pickle'
 
-    if os.path.exists(pickle_file_path):
+    if pickle_file_path.exists():
         with open(pickle_file_path, 'rb') as token:
             cred = pickle.load(token)
 
@@ -30,8 +31,7 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes):
                 CLIENT_SECRET_FILE, SCOPES)
             cred = flow.run_local_server()
 
-        os.makedirs(pickle_file_path, exist_ok=True)
-        with open(pickle_file_path, 'wb') as token:
+        with open(create_path_if_not_exists(pickle_file_path), 'wb') as token:
             pickle.dump(cred, token)
 
     try:
