@@ -29,11 +29,12 @@ def upload_file(filename: str, title: str, description: str, tags: List[str], pr
         'notifySubscribers': False
     }
 
-    # mediaFile = MediaFileUpload(filename)
-    #
-    # response_upload = service.videos().insert(
-    #     part='snippet,status',
-    #     body=request_body,
-    #     media_body=mediaFile
-    # ).execute()
-    print("youtube file uploaded")
+    media_file = MediaFileUpload(str(filename))
+
+    response_upload = service.videos().insert(
+        part='snippet,status',
+        body=request_body,
+        media_body=media_file
+    ).execute()
+
+    print(response_upload, "youtube file uploaded")

@@ -13,7 +13,7 @@ from youtube_video_helper import upload_file
 
 def main():
     load_dotenv()
-    image_paths = RedditImageScraper(limit=1, order="hot").get_images()
+    image_paths = RedditImageScraper(limit=5, order="hot").get_images()
     loading = 0
     for path in image_paths:
         text = detect_text(path["file_path"])
@@ -23,13 +23,13 @@ def main():
         loading += 1
         print(f"{int((loading / len(image_paths) * 100))} %")
 
-    gotowe_path = assemble_video(image_paths)
+    assemble_video(image_paths)
 
-    upload_file(filename=ProjectPaths.OUTPUT_VIDEO,
-                title='[FUNNY] #Shorts',
-                description='typical smiezne sfilmiki fajne smizenesze descrition',
-                tags=['zabawa', 'smiechawa', 'super XD'],
-                privacy_status='public')
+    # upload_file(filename=ProjectPaths.OUTPUT_VIDEO,
+    #             title='[FUNNY] #Shorts 10',
+    #             description='Super funny memes compilation',
+    #             tags=['Shorts', 'funny', 'memes', "meme"],
+    #             privacy_status='public')
 
 
 if __name__ == '__main__':

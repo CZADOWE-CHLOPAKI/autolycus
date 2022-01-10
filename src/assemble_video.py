@@ -13,7 +13,7 @@ def combine_sound(image_paths, start_meme_delay, end_meme_delay):
     audio_output = AudioSegment.silent(0)
     image_times = []
     for path in image_paths:
-        audio_output = AudioSegment.silent(start_meme_delay)
+        audio_output += AudioSegment.silent(start_meme_delay)
 
         audio_path = path['root_path'] + '/audio.mp3'
         fragment = AudioSegment.from_mp3(audio_path)
