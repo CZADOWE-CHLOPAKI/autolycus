@@ -4,8 +4,8 @@ from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
-from src.config import SECRETS_PATH
-from src.utils import create_path_if_not_exists
+from config import SECRETS_PATH
+from utils import create_path_if_not_exists
 
 
 def Create_Service(client_secret_file, api_name, api_version, *scopes):
@@ -17,7 +17,8 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes):
 
     cred = None
 
-    pickle_file_path = SECRETS_PATH / f'token_{API_SERVICE_NAME}_{API_VERSION}.pickle'
+    pickle_file_path = SECRETS_PATH / \
+        f'token_{API_SERVICE_NAME}_{API_VERSION}.pickle'
 
     if pickle_file_path.exists():
         with open(pickle_file_path, 'rb') as token:

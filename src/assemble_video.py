@@ -3,28 +3,29 @@ import subprocess
 import cv2
 from pydub import AudioSegment
 
-from config import ProjectPaths
-from src.utils import create_path_if_not_exists
+from config import ProjectPaths, MAX_YOUTUBE_SHORT_LENGTH_MS
+from utils import create_path_if_not_exists
 
 
 def combine_sound(image_paths, start_meme_delay, end_meme_delay):
     # generate audio file and times of each meme
     audio_output = AudioSegment.silent(0)
-    image_times = []
+    image_times_ms = []
     for path in image_paths:
-        audio_output += AudioSegment.silent(start_meme_delay)
+        meme_audio = AudioSegment.silent(start_meme_delay)
 
         audio_path = path['root_path'] + '/audio.mp3'
-        fragment = AudioSegment.from_mp3(audio_path)
-        audio_output += fragment
+        meme_audio += AudioSegment.from_mp3(audio_path)
 
-        audio_output += AudioSegment.silent(end_meme_delay)
-        # if len(audio_output_to_be_added) + len(audio_output) <= YOUTUBE_SHORT_LENGTH:
-        #     audio_output += audio_output_to_be_added
-        image_times.append(start_meme_delay + end_meme_delay + len(fragment))
+        meme_audio += AudioSegment.silent(end_meme_delay)
 
-    audio_output.export(create_path_if_not_exists(ProjectPaths.COMBINED_SOUND), format="wav")
-    return audio_output, image_times
+        if len(meme_audio) + len(audio_output) >= MAX_YOUTUBE_SHORT_LENGTH_MS:
+            break
+
+        audio_output += meme_audio
+        image_times_ms.append(len(meme_audio))
+
+    return audio_output, image_times_ms
 
 
 def assemble_video(image_paths):
@@ -36,8 +37,11 @@ def assemble_video(image_paths):
     audio_output, image_times_ms = combine_sound(
         image_paths, start_meme_delay, end_meme_delay)
 
+    audio_output.export(create_path_if_not_exists(
+        ProjectPaths.COMBINED_SOUND), format="wav")
+
     img_array = []
-    for path in image_paths:
+    for path in image_paths[:len(image_times_ms)]:
         img = cv2.imread(path['file_path'])
         img = cv2.resize(img, resolution, interpolation=cv2.INTER_AREA)
         img_array.append(img)
@@ -52,12 +56,6 @@ def assemble_video(image_paths):
 
     out.release()
 
-    # cmd  = 'ffmpeg -y -i audio.wav -filter:a "volume=1dB" audio2.wav'
-    # subprocess.call(cmd, shell=True)
-
-    # cmd = "ffmpeg -i CHINESE_RAP.mp3 -i audio.wav -filter_complex amix=inputs=2:duration=longest output4.mp3"
-    # subprocess.call(cmd, shell=True)
-
-    cmd = f'ffmpeg -y -i {ProjectPaths.VIDEO_NO_SOUND} -i {ProjectPaths.COMBINED_SOUND} -c:v copy -c:a aac {ProjectPaths.OUTPUT_VIDEO}'
+    cmd = f'ffmpeg -hide_banner -loglevel error -y -i {ProjectPaths.VIDEO_NO_SOUND} -i {ProjectPaths.COMBINED_SOUND} -c:v copy -c:a aac {ProjectPaths.OUTPUT_VIDEO}'
     subprocess.call(cmd, shell=True)
     print('Assembling video done')
