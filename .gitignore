@@ -2,6 +2,9 @@
 *.mov
 *.jpg
 *.png
+*.mp3
+*.mp4
+*.wav
 
 # google api secrets
 secrets/*
