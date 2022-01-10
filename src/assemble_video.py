@@ -3,29 +3,32 @@ import numpy as np
 import glob
 from pydub import AudioSegment
 import subprocess
+from . import YOUTUBE_SHORT_LENGTH
 
 
 def combine_sound(image_paths, start_meme_delay, end_meme_delay):
     # generate audio file and times of each meme
-    audio_output = 0
+    audio_output = AudioSegment.silent(0)
     image_times = []
     for path in image_paths:
-        audio_output += AudioSegment.silent(start_meme_delay)
+        audio_output_to_be_added = AudioSegment.silent(start_meme_delay)
 
         audio_path = path['root_path'] + '/audio.mp3'
         fragment = AudioSegment.from_mp3(audio_path)
-        audio_output += fragment
+        audio_output_to_be_added += fragment
 
-        audio_output += AudioSegment.silent(end_meme_delay)
+        audio_output_to_be_added += AudioSegment.silent(end_meme_delay)
+        if len(audio_output_to_be_added) + len(audio_output) <= YOUTUBE_SHORT_LENGTH:
+            audio_output += audio_output_to_be_added
+            image_times.append(start_meme_delay+end_meme_delay + len(fragment))
 
-        image_times.append(start_meme_delay+end_meme_delay + len(fragment))
     audio_output.export("audio.wav", format="wav")
     return audio_output, image_times
 
 
 def assemble_video(image_paths):
     start_meme_delay = 100  # ms
-    end_meme_delay = 1000  # ms
+    end_meme_delay = 1500  # ms
 
     resolution = (607, 1080)
 
@@ -46,7 +49,16 @@ def assemble_video(image_paths):
             out.write(image)
 
     out.release()
-    cmd = 'ffmpeg -y -i project.mp4 -i audio.wav -c:v copy -c:a aac output.mp4'
+
+    cmd  = 'ffmpeg -y -i audio.wav -filter:a "volume=1dB" audio2.wav'
+    subprocess.call(cmd, shell=True)
+
+    # cmd = "ffmpeg -i CHINESE_RAP.mp3 -i audio.wav -filter_complex amix=inputs=2:duration=longest output4.mp3"
+    # subprocess.call(cmd, shell=True)
+
+
+
+    cmd = 'ffmpeg -y -i project.mp4 -i audio2.wav -c:v copy -c:a aac output.mp4'
     subprocess.call(cmd, shell=True)
     print('Your memes are done my master1! UwU')
-    return "project.mp4"
+    return "output.mp4"
