@@ -6,6 +6,9 @@
 *.mp4
 *.wav
 
+#weird annoying mac file
+.DS_Store
+
 # google api secrets
 secrets/*
 

@@ -3,9 +3,9 @@ import re
 from dotenv import load_dotenv
 
 from assemble_video import assemble_video
-from detect_text import detect_text
-from reddit_grabber import RedditImageScraper
-from text_to_speech import text_to_speech
+from api_helpers.detect_text import detect_text
+from api_helpers.reddit_grabber import RedditImageScraper
+from api_helpers.text_to_speech import text_to_speech
 
 
 def main():

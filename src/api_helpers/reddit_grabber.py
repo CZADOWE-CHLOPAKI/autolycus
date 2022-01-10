@@ -8,7 +8,7 @@ from utils import download
 
 
 class RedditImageScraper:
-    def __init__(self, subreddit="dankmemes", limit=10, order="top", nsfw=False):
+    def __init__(self, subreddit="memes", limit=10, order="top", nsfw=False):
         config = configparser.ConfigParser()
         config.read('config.ini')
         self.sub = subreddit
@@ -22,7 +22,7 @@ class RedditImageScraper:
 
     def does_submission_pass_rules(self, submission):
         return not submission.stickied and submission.over_18 == self.nsfw \
-               and submission.url.endswith(('jpg', 'jpeg', 'png'))
+            and submission.url.endswith(('jpg', 'jpeg', 'png'))
 
     def get_images(self):
         """
