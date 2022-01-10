@@ -4,6 +4,8 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from google.auth.transport.requests import Request
 
+from src.config import SECRETS_PATH
+
 
 def Create_Service(client_secret_file, api_name, api_version, *scopes):
     print(client_secret_file, api_name, api_version, scopes, sep='-')
@@ -11,15 +13,13 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes):
     API_SERVICE_NAME = api_name
     API_VERSION = api_version
     SCOPES = [scope for scope in scopes[0]]
-    print(SCOPES)
 
     cred = None
 
-    pickle_file = f'token_{API_SERVICE_NAME}_{API_VERSION}.pickle'
-    # print(pickle_file)
+    pickle_file_path = f'{SECRETS_PATH}/token_{API_SERVICE_NAME}_{API_VERSION}.pickle'
 
-    if os.path.exists(pickle_file):
-        with open(pickle_file, 'rb') as token:
+    if os.path.exists(pickle_file_path):
+        with open(pickle_file_path, 'rb') as token:
             cred = pickle.load(token)
 
     if not cred or not cred.valid:
@@ -30,7 +30,8 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes):
                 CLIENT_SECRET_FILE, SCOPES)
             cred = flow.run_local_server()
 
-        with open(pickle_file, 'wb') as token:
+        os.makedirs(pickle_file_path, exist_ok=True)
+        with open(pickle_file_path, 'wb') as token:
             pickle.dump(cred, token)
 
     try:
