@@ -8,12 +8,11 @@ setup-python:
     )
 
 setup-front:
-	cd front
-	npm install
+	npm install --prefix ./front/
 
 setup:
-	setup-front
-	setup-python
+	make setup-front
+	make setup-python
 
 run-python:	
 	set -e
@@ -23,18 +22,16 @@ run-python:
     )
 
 run-front:
-	cd front 
-	npm run dev
-	cd -
+	npm run dev --prefix ./front/
 
 run:
-	run-front
+	make run-front
 up:
-	run
+	make run
 all:
-	run
+	make run
 dev:
-	run
+	make run
 
 freeze:
 	pip freeze > requirements.txt
