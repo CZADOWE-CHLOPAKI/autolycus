@@ -4,7 +4,7 @@ import re
 
 import praw
 
-from utils import download
+from utils import download, print_progress_bar
 
 
 class RedditImageScraper:
@@ -29,6 +29,7 @@ class RedditImageScraper:
         Gets images from subreddit.
         Returns array of downloaded filenames.
         """
+
         images = []
         try:
             go = 0
@@ -52,9 +53,16 @@ class RedditImageScraper:
                         if go >= self.limit:
                             break
 
+            loading = 0
+            loading_bar_prefix, loading_bar_suffix = 'downloading images...', 'done'
+            print_progress_bar(loading, len(images),
+                               loading_bar_prefix, loading_bar_suffix)
             for image in images:
                 os.makedirs(image["root_path"], exist_ok=True)
                 download(image["url"], image["file_path"])
+                loading += 1
+                print_progress_bar(loading, len(images),
+                                   loading_bar_prefix, loading_bar_suffix)
 
         except Exception as e:
             print(e)
