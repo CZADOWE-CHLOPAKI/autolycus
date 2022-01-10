@@ -1,8 +1,8 @@
 import pickle
-import os
+
+from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from google.auth.transport.requests import Request
 
 from src.config import SECRETS_PATH
 from src.utils import create_path_if_not_exists

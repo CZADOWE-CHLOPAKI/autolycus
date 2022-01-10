@@ -22,7 +22,7 @@ class RedditImageScraper:
 
     def does_submission_pass_rules(self, submission):
         return not submission.stickied and submission.over_18 == self.nsfw \
-            and submission.url.endswith(('jpg', 'jpeg', 'png'))
+               and submission.url.endswith(('jpg', 'jpeg', 'png'))
 
     def get_images(self):
         """

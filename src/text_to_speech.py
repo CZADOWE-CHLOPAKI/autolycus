@@ -23,7 +23,6 @@ def text_to_speech(text: str, output_path: str, lang: str = "en-US"):
     audio_config = texttospeech.AudioConfig(
         {"audio_encoding": texttospeech.AudioEncoding.MP3, "speaking_rate": 1.10})
 
-
     # Perform the text-to-speech request on the text input with the selected
     # voice parameters and audio file type
     response = client.synthesize_speech(

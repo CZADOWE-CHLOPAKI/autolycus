@@ -1,20 +1,16 @@
 import re
-from pathlib import Path
 
 from dotenv import load_dotenv
 
 from assemble_video import assemble_video
 from detect_text import detect_text
 from reddit_grabber import RedditImageScraper
-from config import ProjectPaths
-from src.utils import create_path_if_not_exists
 from text_to_speech import text_to_speech
-from youtube_video_helper import upload_file
 
 
 def main():
     load_dotenv()
-    image_paths = RedditImageScraper(limit=5, order="hot").get_images()
+    image_paths = RedditImageScraper(limit=7, order="hot").get_images()
     loading = 0
     for path in image_paths:
         text = detect_text(path["file_path"])

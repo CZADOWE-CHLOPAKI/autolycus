@@ -1,10 +1,9 @@
-import os
 import subprocess
 
 import cv2
 from pydub import AudioSegment
 
-from config import ProjectPaths, YOUTUBE_SHORT_LENGTH
+from config import ProjectPaths
 from src.utils import create_path_if_not_exists
 
 
