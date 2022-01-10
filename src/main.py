@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -17,7 +18,10 @@ def main():
     loading = 0
     for path in image_paths:
         text = detect_text(path["file_path"])
-        text = text.replace("\n", "", -1)
+        text = text.replace("\n", " ", -1)
+        # print(f"before: '{text}'")
+        text = re.sub(r'[^A-Za-z0-9 "]+', '', text)
+        # print(f"after: '{text}'")
         if text != "":
             text_to_speech(text, path["root_path"])
         loading += 1
