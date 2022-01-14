@@ -1,6 +1,6 @@
 example video: https://www.youtube.com/watch?v=kzVpFQMPZQQ
 <br/>
-<img src="https://media.giphy.com/media/LcMyCaWzEbK12CpBgJ/giphy.gif" width="100%" />
+<img src="https://media.giphy.com/media/LcMyCaWzEbK12CpBgJ/giphy.gif" width="50%" />
 
 run `cat Makefile` to see available commands.
 
