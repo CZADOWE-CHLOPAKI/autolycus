@@ -14,18 +14,24 @@ setup:
 	make setup-front
 	make setup-python
 
-run-python:	
+run-cli:	
 	set -e
 	( \
        source '$(shell pwd)/env/bin/activate'; \
-	   python src/main.py; \
+	   python src/cli.py; \
     )
 
 run-front:
 	npm run dev --prefix ./front/
 
+run-back:
+	uvicorn src.main:app --reload
+
+
 run:
-	make run-front
+	#  -j [N], --jobs[=N] Allow N jobs at once; infinite jobs with no arg.
+	make -j 2 run-front run-back 
+
 up:
 	make run
 all:
@@ -35,3 +41,6 @@ dev:
 
 freeze:
 	pip freeze > requirements.txt
+
+clean:
+	rm -rf ./images/*

@@ -21,7 +21,7 @@ def create_path_if_not_exists(path: Path) -> Path:
 
 
 # https://stackoverflow.com/questions/3173320/text-progress-bar-in-terminal-with-block-characters
-def print_progress_bar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"):
+def print_progress_bar(iteration, total, prefix='', suffix='', decimals=1, length=50, fill='█', printEnd="\r"):
     """
     Call in a loop to create terminal progress bar
     @params:
