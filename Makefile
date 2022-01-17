@@ -11,8 +11,7 @@ setup-front:
 	npm install --prefix ./front/
 
 setup:
-	make setup-front
-	make setup-python
+	make -j 2  setup-front setup-python
 
 run-cli:	
 	set -e

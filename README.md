@@ -1,4 +1,4 @@
-example video: https://www.youtube.com/watch?v=kzVpFQMPZQQ
+This script scrapes example video: https://www.youtube.com/watch?v=kzVpFQMPZQQ
 <br/>
 <br/>
 <img src="https://media.giphy.com/media/LcMyCaWzEbK12CpBgJ/giphy.gif" width="50%" />
