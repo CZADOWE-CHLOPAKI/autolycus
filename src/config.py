@@ -3,7 +3,7 @@ from pathlib import Path
 
 MAX_YOUTUBE_SHORT_LENGTH_MS = 60 * 1000
 TEMP_ASSEMBLY_FILES_PATH = "./assemble_files/"
-SECRETS_PATH = Path("secrets")
+SECRETS_PATH = Path("./secrets")
 
 
 @dataclass

@@ -42,7 +42,7 @@ def assemble_video(image_paths):
 
     img_array = []
     for path in image_paths[:len(image_times_ms)]:
-        img = cv2.imread(path['file_path'])
+        img = cv2.imread(path['image_path'])
         img = cv2.resize(img, resolution, interpolation=cv2.INTER_AREA)
         img_array.append(img)
 

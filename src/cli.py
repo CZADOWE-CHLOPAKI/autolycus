@@ -23,7 +23,7 @@ def main():
     print_progress_bar(loading, image_limit,
                        loading_bar_prefix, loading_bar_suffix)
     for path in image_paths:
-        text = detect_text(path["file_path"])
+        text = detect_text(path["image_path"])
         text = text.replace("\n", " ", -1)
         # print(f"before: '{text}'")
         text = re.sub(r'[^A-Za-z0-9 "]+', '', text)

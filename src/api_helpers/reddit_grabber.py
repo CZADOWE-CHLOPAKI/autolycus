@@ -45,10 +45,11 @@ class RedditImageScraper:
                     file_name = re.search(
                         '(?s:.*)\w/(.*)', submission.url).group(1)
                     root_path = self.path + file_name.split('.')[0]
-                    file_path = root_path + "/image." + file_name.split('.')[1]
-                    if not os.path.isfile(file_path):
+                    image_path = root_path + "/image." + \
+                        file_name.split('.')[1]
+                    if not os.path.isfile(image_path):
                         images.append(
-                            {'url': submission.url, 'file_path': file_path, 'root_path': root_path})
+                            {'url': submission.url, 'image_path': image_path, 'root_path': root_path})
                         go += 1
                         if go >= self.limit:
                             break
@@ -59,7 +60,7 @@ class RedditImageScraper:
                                loading_bar_prefix, loading_bar_suffix)
             for image in images:
                 os.makedirs(image["root_path"], exist_ok=True)
-                download(image["url"], image["file_path"])
+                download(image["url"], image["image_path"])
                 loading += 1
                 print_progress_bar(loading, len(images),
                                    loading_bar_prefix, loading_bar_suffix)
