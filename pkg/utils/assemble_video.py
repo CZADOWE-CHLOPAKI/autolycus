@@ -28,6 +28,8 @@ def combine_sound(image_paths, start_meme_delay, end_meme_delay):
     return audio_output, image_times_ms
 
 
+# TODO video/audio is corrupted, cant be send to frontend
+# try to assemble with ffmpeg
 def assemble_video(image_paths):
     start_meme_delay = 100  # ms
     end_meme_delay = 1500  # ms
