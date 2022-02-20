@@ -3,7 +3,7 @@ from typing import List
 
 from googleapiclient.http import MediaFileUpload
 
-from api_helpers.google_api_auth import Create_Service
+from pkg.api_helpers.google_api_auth import Create_Service
 
 
 def upload_file(filename: str, title: str, description: str, tags: List[str], privacy_status: str):
