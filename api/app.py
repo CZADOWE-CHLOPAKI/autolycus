@@ -23,7 +23,7 @@ app = create_app()
 
 @app.on_event("startup")
 def register_routes():
-    from endpoints.user import router
+    from endpoints.videos import router
     app.include_router(router)
 
     @app.get("/", tags=["Root"])

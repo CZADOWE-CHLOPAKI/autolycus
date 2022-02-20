@@ -2,10 +2,10 @@ import re
 
 from dotenv import load_dotenv
 
-from assemble_video import assemble_video
-from api_helpers.detect_text import detect_text
-from api_helpers.reddit_grabber import RedditImageScraper
-from api_helpers.text_to_speech import text_to_speech
+from pkg.api_helpers.detect_text import detect_text
+from pkg.api_helpers.reddit_grabber import RedditImageScraper
+from pkg.api_helpers.text_to_speech import text_to_speech
+from pkg.utils.assemble_video import assemble_video
 
 
 def create_video(subreddit: str, image_limit: int, order: str):
@@ -28,7 +28,3 @@ def create_video(subreddit: str, image_limit: int, order: str):
     #             description='Hej kochani dzieki za kino dzisiaj fajnie było co sądzicie o tym i co naley zmienić????',
     #             tags=['Shorts', 'funny', 'memes', "meme"],
     # privacy_status='private')
-
-
-if __name__ == '__main__':
-    create_video("dankmemes", 10, "hot")

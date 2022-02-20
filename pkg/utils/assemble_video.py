@@ -58,4 +58,3 @@ def assemble_video(image_paths):
 
     cmd = f'ffmpeg -hide_banner -loglevel error -y -i {ProjectPaths.VIDEO_NO_SOUND} -i {ProjectPaths.COMBINED_SOUND} -c:v copy -c:a aac {ProjectPaths.OUTPUT_VIDEO} '
     subprocess.call(cmd, shell=True)
-    print('Assembling video done')

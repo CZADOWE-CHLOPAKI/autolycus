@@ -4,6 +4,7 @@ import re
 
 import praw
 
+from pkg.config.config import REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET
 from pkg.utils.utils import download
 
 
@@ -16,8 +17,8 @@ class RedditImageScraper:
         self.order = order
         self.nsfw = nsfw
         self.path = f'images/{self.sub}/'
-        self.reddit = praw.Reddit(client_id=config['REDDIT']['client_id'],
-                                  client_secret=config['REDDIT']['client_secret'],
+        self.reddit = praw.Reddit(client_id=REDDIT_CLIENT_ID,
+                                  client_secret=REDDIT_CLIENT_SECRET,
                                   user_agent='reddit image downloader')
 
     def does_submission_pass_rules(self, submission):
