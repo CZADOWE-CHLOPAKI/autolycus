@@ -1,39 +1,25 @@
 import re
 
 from dotenv import load_dotenv
-from api_helpers.youtube_video_helper import upload_file
 
 from assemble_video import assemble_video
 from api_helpers.detect_text import detect_text
 from api_helpers.reddit_grabber import RedditImageScraper
 from api_helpers.text_to_speech import text_to_speech
-from config import ProjectPaths
-from utils import print_progress_bar
 
 
-def main():
+def create_video(subreddit: str, image_limit: int, order: str):
     load_dotenv()
 
-    image_limit = 7
-    image_paths = RedditImageScraper(subreddit='me_irl',
-                                     limit=image_limit, order="hot").get_images()
+    image_paths = RedditImageScraper(subreddit=subreddit,
+                                     limit=image_limit, order=order).get_images()
 
-    loading = 0
-    loading_bar_prefix, loading_bar_suffix = 'vision & speech', 'done'
-    print_progress_bar(loading, image_limit,
-                       loading_bar_prefix, loading_bar_suffix)
     for path in image_paths:
         text = detect_text(path["image_path"])
         text = text.replace("\n", " ", -1)
-        # print(f"before: '{text}'")
         text = re.sub(r'[^A-Za-z0-9 "]+', '', text)
-        # print(f"after: '{text}'")
         if text != "":
             text_to_speech(text, path["root_path"])
-
-        loading += 1
-        print_progress_bar(loading, image_limit,
-                           loading_bar_prefix, loading_bar_suffix)
 
     assemble_video(image_paths)
 
@@ -45,4 +31,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    create_video("dankmemes", 10, "hot")

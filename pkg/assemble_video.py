@@ -3,8 +3,8 @@ import subprocess
 import cv2
 from pydub import AudioSegment
 
-from config import ProjectPaths, MAX_YOUTUBE_SHORT_LENGTH_MS
-from utils import create_path_if_not_exists
+from pkg.config.config import MAX_YOUTUBE_SHORT_LENGTH_MS, ProjectPaths
+from pkg.utils.utils import create_path_if_not_exists
 
 
 def combine_sound(image_paths, start_meme_delay, end_meme_delay):
@@ -56,6 +56,6 @@ def assemble_video(image_paths):
 
     out.release()
 
-    cmd = f'ffmpeg -hide_banner -loglevel error -y -i {ProjectPaths.VIDEO_NO_SOUND} -i {ProjectPaths.COMBINED_SOUND} -c:v copy -c:a aac {ProjectPaths.OUTPUT_VIDEO}'
+    cmd = f'ffmpeg -hide_banner -loglevel error -y -i {ProjectPaths.VIDEO_NO_SOUND} -i {ProjectPaths.COMBINED_SOUND} -c:v copy -c:a aac {ProjectPaths.OUTPUT_VIDEO} '
     subprocess.call(cmd, shell=True)
     print('Assembling video done')
