@@ -1,10 +1,7 @@
 #test video files
-*.mov
-*.jpg
-*.png
-*.mp3
-*.mp4
-*.wav
+assets/
+images/
+output/
 
 #weird annoying mac file
 .DS_Store
