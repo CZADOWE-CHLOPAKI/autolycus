@@ -1,5 +1,15 @@
+import os
 from dataclasses import dataclass
 from pathlib import Path
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# KEYS
+REDDIT_CLIENT_ID = os.environ.get("REDDIT_CLIENT_ID", "")
+REDDIT_CLIENT_SECRET = os.environ.get("REDDIT_CLIENT_SECRET", "")
+
 
 MAX_YOUTUBE_SHORT_LENGTH_MS = 60 * 1000
 TEMP_ASSEMBLY_FILES_PATH = "./assemble_files/"

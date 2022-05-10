@@ -4,7 +4,8 @@ import re
 
 import praw
 
-from utils import download, print_progress_bar
+from pkg.config.config import REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET
+from pkg.utils.utils import download
 
 
 class RedditImageScraper:
@@ -16,8 +17,8 @@ class RedditImageScraper:
         self.order = order
         self.nsfw = nsfw
         self.path = f'images/{self.sub}/'
-        self.reddit = praw.Reddit(client_id=config['REDDIT']['client_id'],
-                                  client_secret=config['REDDIT']['client_secret'],
+        self.reddit = praw.Reddit(client_id=REDDIT_CLIENT_ID,
+                                  client_secret=REDDIT_CLIENT_SECRET,
                                   user_agent='reddit image downloader')
 
     def does_submission_pass_rules(self, submission):
@@ -54,16 +55,9 @@ class RedditImageScraper:
                         if go >= self.limit:
                             break
 
-            loading = 0
-            loading_bar_prefix, loading_bar_suffix = 'downloading images...', 'done'
-            print_progress_bar(loading, len(images),
-                               loading_bar_prefix, loading_bar_suffix)
             for image in images:
                 os.makedirs(image["root_path"], exist_ok=True)
                 download(image["url"], image["image_path"])
-                loading += 1
-                print_progress_bar(loading, len(images),
-                                   loading_bar_prefix, loading_bar_suffix)
 
         except Exception as e:
             print(e)
