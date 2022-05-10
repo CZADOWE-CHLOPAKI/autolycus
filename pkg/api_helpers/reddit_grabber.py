@@ -1,4 +1,3 @@
-import configparser
 import os
 import re
 
@@ -10,8 +9,6 @@ from pkg.utils.utils import download
 
 class RedditImageScraper:
     def __init__(self, subreddit="memes", limit=10, order="top", nsfw=False):
-        config = configparser.ConfigParser()
-        config.read('config.ini')
         self.sub = subreddit
         self.limit = limit
         self.order = order
@@ -23,7 +20,7 @@ class RedditImageScraper:
 
     def does_submission_pass_rules(self, submission):
         return not submission.stickied and submission.over_18 == self.nsfw \
-            and submission.url.endswith(('jpg', 'jpeg', 'png'))
+               and submission.url.endswith(('jpg', 'jpeg', 'png'))
 
     def get_images(self):
         """
@@ -47,7 +44,7 @@ class RedditImageScraper:
                         '(?s:.*)\w/(.*)', submission.url).group(1)
                     root_path = self.path + file_name.split('.')[0]
                     image_path = root_path + "/image." + \
-                        file_name.split('.')[1]
+                                 file_name.split('.')[1]
                     if not os.path.isfile(image_path):
                         images.append(
                             {'url': submission.url, 'image_path': image_path, 'root_path': root_path})
