@@ -23,8 +23,10 @@ app = create_app()
 
 @app.on_event("startup")
 def register_routes():
-    from endpoints.videos import router
-    app.include_router(router)
+    from endpoints.videos import router as video_router
+    app.include_router(video_router)
+    from endpoints.images import router as image_router
+    app.include_router(image_router)
 
     @app.get("/", tags=["Root"])
     async def read_root():

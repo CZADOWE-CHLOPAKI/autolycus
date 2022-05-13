@@ -1,10 +1,12 @@
 import motor.motor_asyncio
 from bson import ObjectId
+from pymongo import MongoClient
 
 from .database_helper import user_helper
 from ..config.config import MONGO_CONNECTION_URL
 
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_CONNECTION_URL)
+# client = MongoClient('mongo', 27017)
 
 database = client.maps
 

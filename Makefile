@@ -1,30 +1,29 @@
-setup-python:
-	python3 -m venv env
-	set -e
-	( \
-       source '$(shell pwd)/env/bin/activate'; \
-	   pip -V; \
-       pip3 install -r requirements.txt; \
-    )
+setup-back:
+	docker-compose up -d
+
+	#wait and then run it or run after docker compose???
+	docker exec -it autolycus_al-db_1 mongo --eval "db.createUser({user: 'root', pwd: 'root', roles: [{ role: 'userAdminAnyDatabase', db: 'admin' } ]})"
 
 setup-front:
 	npm install --prefix ./front/
 
 setup:
-	make -j 2  setup-front setup-python
+	make -j 2  setup-front setup-back
 
 run-cli:	
 	set -e
 	( \
        source '$(shell pwd)/env/bin/activate'; \
-	   python src/cli.py; \
+	   export PYTHONPATH=./; \
+	   python pkg/cli.py; \
     )
 
 run-front:
 	npm run dev --prefix ./front/
 
 run-back:
-	uvicorn src.main:app --reload
+	docker run -p 5000:5000 al-back
+
 
 
 run:
