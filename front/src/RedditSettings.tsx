@@ -36,8 +36,8 @@ const RedditSettings = ({}: RedditSettingsPropsType) => {
               className="w-2/3 h-auto"
             />
             <div className="flex flex-col w-1/3 h-auto space-y-4">
-              <button>usuń 💀</button>
-              <button>posluchaj 🔈</button>
+              <button>usuń 💀❗❗❗❗❗❗❗❗</button>
+              <button>🔈🔈🔈 posluchaj 🔈🔈🔈</button>
             </div>
           </div>
         ))}
