@@ -2,7 +2,6 @@ FROM python:3.10
 
 WORKDIR /code
 
-
 COPY ./requirements.txt /code/requirements.txt
 
 RUN apt-get update

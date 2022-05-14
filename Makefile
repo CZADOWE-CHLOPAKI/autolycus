@@ -1,5 +1,5 @@
 setup-db:
-	docker exec -it autolycus_al-db_1 mongo --eval "db.createUser({user: 'root', pwd: 'root', roles: [{ role: 'userAdminAnyDatabase', db: 'admin' } ]})"
+	docker exec -it autolycus_al-db_1 mongo --eval "use admin; db.createUser({user: 'root', pwd: 'root', roles: [{ role: 'root', db: 'admin' } ]})"
 
 run-cli:	
 	set -e
@@ -9,6 +9,16 @@ run-cli:
 	   python pkg/cli.py; \
     )
 
+run-back:
+	set -e
+	( \
+       source '$(shell pwd)/env/bin/activate'; \
+	   export PYTHONPATH=./; \
+	   python api/main.py; \
+    )
+
+run-front:
+	cd front && npm run dev
 
 setup:
 	chmod +x add_hosts.sh
@@ -16,7 +26,8 @@ setup:
 
 run:
 	docker compose up -d
-	cd front && yarn dev
+	make -j 2 run-front run-back
+	# docker compose up -d
 	# python -m webbrowser "http://0.0.0.0:5000/docs"
 	# python -m webbrowser "http://0.0.0.0:3000/"
 	# python -m webbrowser "http://0.0.0.0:27017/"
