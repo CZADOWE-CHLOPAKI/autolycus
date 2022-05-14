@@ -16,5 +16,4 @@ COPY ./secrets /code/secrets
 
 ENV PYTHONPATH=./
 
-# CMD ["uvicorn", "main:api" "--host 0.0.0.0", "--port 8000", "--reload"]
 CMD ["python", "api/main.py"]

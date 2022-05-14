@@ -1,7 +1,35 @@
 version: '3.9'
 
 services:
-  al-db:
+  # front:
+  #   build:
+  #     dockerfile: front/Dockerfile
+  #     context: .
+  #   restart: always
+  #   ports:
+  #     #front
+  #     - "3000:3000"
+  #     #hmr https://github.com/vitejs/vite/issues/4116
+  #     - "3010:3010"
+  #   tty: true
+
+
+  back:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    env_file:
+      - .env
+    environment:
+      - DEBUG=1
+    volumes:
+      - .:/code
+    depends_on:
+      - al-db
+    ports:
+      - "5000:5000"
+      
+  db:
     image: mongo
     env_file:
       - .env
@@ -9,17 +37,4 @@ services:
     ports:
       - "27017:27017"
 
-  al-back:
-    build:
-      dockerfile: Dockerfile
-      context: .
-    env_file:
-      - .env
-    environment:
-      DEBUG: 1
-    volumes:
-      - .:/code
-    depends_on:
-      - al-db
-    ports:
-      - "5000:5000"
+

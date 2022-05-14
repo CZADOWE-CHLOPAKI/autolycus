@@ -1,14 +1,5 @@
-setup-back:
-	docker-compose up -d
-
-	#wait and then run it or run after docker compose???
+setup-db:
 	docker exec -it autolycus_al-db_1 mongo --eval "db.createUser({user: 'root', pwd: 'root', roles: [{ role: 'userAdminAnyDatabase', db: 'admin' } ]})"
-
-setup-front:
-	npm install --prefix ./front/
-
-setup:
-	make -j 2  setup-front setup-back
 
 run-cli:	
 	set -e
@@ -18,17 +9,19 @@ run-cli:
 	   python pkg/cli.py; \
     )
 
-run-front:
-	npm run dev --prefix ./front/
 
-run-back:
-	docker run -p 5000:5000 al-back
-
-
+setup:
+	chmod +x add_hosts.sh
+	sudo ./add_hosts.sh
 
 run:
-	#  -j [N], --jobs[=N] Allow N jobs at once; infinite jobs with no arg.
-	make -j 2 run-front run-back 
+	docker compose up -d
+	cd front && yarn dev
+	# python -m webbrowser "http://0.0.0.0:5000/docs"
+	# python -m webbrowser "http://0.0.0.0:3000/"
+	# python -m webbrowser "http://0.0.0.0:27017/"
+
+
 
 up:
 	make run
