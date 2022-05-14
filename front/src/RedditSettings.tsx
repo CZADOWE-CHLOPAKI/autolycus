@@ -31,9 +31,8 @@ const RedditSettings = ({}: RedditSettingsPropsType) => {
           <div className="flex" key={idx}>
             <img src={imgSrc} alt="sample img" className="w-2/3 h-auto" />
             <div className="flex flex-col w-1/3 h-auto space-y-4">
-              <button>usuń 💀</button>
-              <button>poslucaj 🔈</button>
-              <div className="text-center">2:14 </div>
+              <button>usuń 💀❗❗❗❗❗❗❗❗</button>
+              <button>🔈🔈🔈 posluchaj 🔈🔈🔈</button>
             </div>
           </div>
         ))}
