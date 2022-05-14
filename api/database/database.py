@@ -1,12 +1,12 @@
 import motor.motor_asyncio
 from bson import ObjectId
-from pydantic import BaseModel, Field, EmailStr
-from pydantic.class_validators import Optional
+from fastapi.encoders import jsonable_encoder
+from pydantic import BaseModel, Field
 
 from ..config.config import MONGO_CONNECTION_URL
 
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_CONNECTION_URL)
-db = client.college
+db = client.autolycus
 
 
 class PyObjectId(ObjectId):
@@ -25,50 +25,25 @@ class PyObjectId(ObjectId):
         field_schema.update(type="string")
 
 
-class StudentModel(BaseModel):
-    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    name: str = Field(...)
-    email: EmailStr = Field(...)
-    course: str = Field(...)
-    gpa: float = Field(..., le=4.0)
-
-    class Config:
-        allow_population_by_field_name = True
-        arbitrary_types_allowed = True
-        json_encoders = {ObjectId: str}
-        schema_extra = {
-            "example": {
-                "name": "Jane Doe",
-                "email": "jdoe@example.com",
-                "course": "Experiments, Science, and Fashion in Nanophotonics",
-                "gpa": "3.0",
-            }
-        }
-
-
-class UpdateStudentModel(BaseModel):
-    name: Optional[str]
-    email: Optional[EmailStr]
-    course: Optional[str]
-    gpa: Optional[float]
-
-    class Config:
-        arbitrary_types_allowed = True
-        json_encoders = {ObjectId: str}
-        schema_extra = {
-            "example": {
-                "name": "Jane Doe",
-                "email": "jdoe@example.com",
-                "course": "Experiments, Science, and Fashion in Nanophotonics",
-                "gpa": "3.0",
-            }
-        }
+class ImageModel(BaseModel):
+    url: str = Field(...)
+    image_path: str = Field(...)
+    root_path: str = Field(...)
 
 
 async def list_students():
     students = await db["students"].find().to_list(1000)
     return students
 
+
+async def add_image(img: ImageModel):
+    new_img = await db["images"].insert_one(jsonable_encoder(img))
+    return new_img
+
+
+async def list_images():
+    imgs = await db["images"].find({}).to_list(1000)
+    return imgs
 #
 # @app.get(
 #     "/{id}", response_description="Get a single student", response_model=StudentModel

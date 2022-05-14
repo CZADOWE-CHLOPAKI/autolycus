@@ -1,5 +1,6 @@
 from fastapi import APIRouter
-from api.database.database import list_students
+
+from api.database.database import add_image, list_images
 from api.models.responseModels import ResponseModel
 
 # from pkg.get_images import get_images as get_images_from_subreddit
@@ -19,9 +20,19 @@ async def downloadtoserver(subreddit: str = 'memes', image_limit: int = 10, orde
     return ResponseModel(message=f"downloaded {image_limit} images to server from {subreddit}")
 
 
+@router.get("/dupa", response_description="Get images from subreddit")
+async def asdasdasdasd(image_idx: int, subreddit: str = 'memes'):
+    # TODO get path from db for the correct image
+    imgs = await list_images()
+    print(imgs)
+    # return FileResponse(path=path)
+    return ResponseModel(message="test")
+
+
 @router.get("/{image_idx}", response_description="Get images from subreddit")
 async def image_idx(image_idx: int, subreddit: str = 'memes'):
     # TODO get path from db for the correct image
-    print(await list_students())
+    x = await add_image()
+    print(x)
     # return FileResponse(path=path)
     return ResponseModel(message="test")
