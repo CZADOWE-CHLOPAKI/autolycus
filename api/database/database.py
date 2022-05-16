@@ -31,11 +31,6 @@ class ImageModel(BaseModel):
     root_path: str = Field(...)
 
 
-async def list_students():
-    students = await db["students"].find().to_list(1000)
-    return students
-
-
 async def add_image(img: ImageModel):
     new_img = await db["images"].insert_one(jsonable_encoder(img))
     return new_img

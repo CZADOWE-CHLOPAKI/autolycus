@@ -3,7 +3,6 @@ from fastapi import APIRouter
 from api.database.database import add_image, list_images
 from api.models.responseModels import ResponseModel
 
-# from pkg.get_images import get_images as get_images_from_subreddit
 router = APIRouter(
     prefix="/images",
     tags=["images"],
@@ -21,7 +20,16 @@ async def downloadtoserver(subreddit: str = 'memes', image_limit: int = 10, orde
 
 
 @router.get("/dupa", response_description="Get images from subreddit")
-async def asdasdasdasd(image_idx: int, subreddit: str = 'memes'):
+async def dupa1(image_idx: int, subreddit: str = 'memes'):
+    # TODO get path from db for the correct image
+    imgs = await list_images()
+    print(imgs)
+    # return FileResponse(path=path)
+    return ResponseModel(message="test")
+
+
+@router.get("/dupa/{n}", response_description="Get images from subreddit")
+async def dupa2(n: int):
     # TODO get path from db for the correct image
     imgs = await list_images()
     print(imgs)
