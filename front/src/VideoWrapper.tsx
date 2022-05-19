@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import NormalButton from './ui/NormalButton';
+import { createAndGetVideoBlob } from './utils/api';
 
 const VideoWrapper = () => {
   const [videoUrl, setVideoUrl] = useState<string>();
@@ -6,11 +8,8 @@ const VideoWrapper = () => {
 
   const generateVideo = async () => {
     setIsGeneratingVideo(true);
-    const res = await fetch(
-      'http://localhost:5000/api/videos/create?subreddit=memes',
-      { method: 'POST' }
-    );
-    const blob = await res.blob();
+
+    const blob = await createAndGetVideoBlob('memes');
 
     setVideoUrl(URL.createObjectURL(blob));
     setIsGeneratingVideo(false);
@@ -18,17 +17,24 @@ const VideoWrapper = () => {
 
   return (
     <div>
-      <button onClick={() => generateVideo()}>zrub film z memow</button>
-      {videoUrl && (
-        <video
-          controls
-          autoPlay={true}
-          src={videoUrl}
-          width={300}
-          height={500}
-        />
-      )}
-      {isGeneratingVideo && <div>generuje film....</div>}
+      <NormalButton
+        onClick={() => generateVideo()}
+        isLoading={isGeneratingVideo}
+        loadingText="generuje film..."
+      >
+        zrub film z memow
+      </NormalButton>
+      <div>
+        {videoUrl && (
+          <video
+            controls
+            autoPlay={true}
+            src={videoUrl}
+            width={300}
+            height={500}
+          />
+        )}
+      </div>
     </div>
   );
 };
