@@ -22,11 +22,7 @@ run-front:
 
 run:
 	docker compose up -d
-	make -j 2 run-front run-back
-	# docker compose up -d
-	# python -m webbrowser "http://0.0.0.0:5000/docs"
-	# python -m webbrowser "http://0.0.0.0:3000/"
-	# python -m webbrowser "http://0.0.0.0:27017/"
+	make run-front
 
 
 

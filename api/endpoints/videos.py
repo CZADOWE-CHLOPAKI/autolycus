@@ -14,4 +14,4 @@ router = APIRouter(
 async def create_video(subreddit: str, image_limit: int = 10, order: str = "hot"):
     create_video_from_memes(subreddit=subreddit,
                             image_limit=image_limit, order=order)
-    return FileResponse(pkg_config.ProjectPaths.OUTPUT_VIDEO_MP4)
+    return FileResponse(pkg_config.ProjectPaths.OUTPUT_VIDEO_WEBM)

@@ -14,28 +14,25 @@ services:
   #   tty: true
 
 
-  # back:
-  #   build:
-  #     dockerfile: Dockerfile
-  #     context: .
-  #   env_file:
-  #     - .env
-  #   environment:
-  #     - DEBUG=1
-  #   volumes:
-  #     - .:/code
-  #   depends_on:
-  #     - al-db
-  #   ports:
-  #     - "5000:5000"
-  #     - "27017:27017"
+  back:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    env_file:
+      - .env
+    environment:
+      - DEBUG=1
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
       
   db:
     image: mongo
     env_file:
       - .env
     restart: always
-    ports:
-      - "27017:27017"
 
 

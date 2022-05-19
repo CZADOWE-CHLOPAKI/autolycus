@@ -21,7 +21,9 @@ def create_video(subreddit: str, image_limit: int, order: str):
         if text != "":
             text_to_speech(text, path["root_path"])
 
-    VideoSound(image_paths).create()
+    video_sound = VideoSound(image_paths)
+    video_sound.create_mp4()
+    video_sound.convert_mp4_to_webm()
 
     # upload_file(filename=ProjectPaths.OUTPUT_VIDEO,
     #             title='[FUNNY] [gigafunny] [SHOCKING] meme DANK MEGA COMP',
