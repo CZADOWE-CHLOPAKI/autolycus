@@ -25,4 +25,5 @@ class ProjectPaths:
 
     VIDEO_NO_SOUND = Root.OUTPUT_TEMP_FILES / "video_no_sound.mp4"
     COMBINED_SOUND = Root.OUTPUT_TEMP_FILES / "sound.wav"
-    OUTPUT_VIDEO = Root.OUTPUT / "youtube_short.mp4"
+    OUTPUT_VIDEO_MP4 = Root.OUTPUT / "youtube_short.mp4"
+    OUTPUT_VIDEO_WEBM = Root.OUTPUT / "youtube_short.webm"

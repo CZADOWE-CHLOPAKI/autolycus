@@ -20,10 +20,6 @@ run-back:
 run-front:
 	cd front && npm run dev
 
-setup:
-	chmod +x add_hosts.sh
-	sudo ./add_hosts.sh
-
 run:
 	docker compose up -d
 	make -j 2 run-front run-back
