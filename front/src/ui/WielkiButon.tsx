@@ -1,4 +1,4 @@
-const WielkiButon: React.FC<{}> = ({ children }) => (
+const WielkiButon: React.FC = ({ children }) => (
   <button
     onClick={() => console.log('dupa')}
     className="flex flex-col text-white transition duration-700 transform rounded-sm group grow bg-gradient-to-r from-green-300 to-emerald-400 hover:skew-x-12 hover:-skew-y-6"

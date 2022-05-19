@@ -31,7 +31,7 @@ class VideoSound:
         subprocess.call(cmd, shell=True)
 
     def convert_mp4_to_webm(self):
-        cmd = f'ffmpeg -i {self.output_video_mp4_path} -c:v libvpx-vp9 -crf 30 -b:v 0 -b:a 128k -c:a libopus {self.output_video_webm_path}'
+        cmd = f'ffmpeg -y -i {self.output_video_mp4_path} -c:v libvpx-vp9 -crf 30 -b:v 0 -b:a 128k -c:a libopus {self.output_video_webm_path}'
         subprocess.call(cmd, shell=True)
 
 
@@ -42,7 +42,6 @@ class VideoNoSound:
     def path(self):
         return self.output_path
 
-    # FIXME in this function there is the bug thats corrupting video
     def assemble_video(self, image_paths, image_timestamps_ms):
         # construct resized array of images
         img_array = []

@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from pkg.api_helpers.detect_text import detect_text
 from pkg.api_helpers.reddit_grabber import RedditImageScraper
 from pkg.api_helpers.text_to_speech import text_to_speech
-from pkg.utils import VideoSound
+from pkg.utils.VideoSound import VideoSound
 
 
 def create_video(subreddit: str, image_limit: int, order: str):
