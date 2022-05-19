@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from pkg.api_helpers.detect_text import detect_text
 from pkg.api_helpers.reddit_grabber import RedditImageScraper
 from pkg.api_helpers.text_to_speech import text_to_speech
-from pkg.utils.assemble_video import assemble_video
+from pkg.utils.VideoSound import VideoSound
 from pkg.utils.utils import print_progress_bar
 
 
@@ -33,7 +33,9 @@ def main():
         print_progress_bar(loading, image_limit,
                            loading_bar_prefix, loading_bar_suffix)
 
-    assemble_video(image_paths)
+    video = VideoSound(image_paths)
+    video.create_mp4()
+    video.convert_mp4_to_webm()
 
     # upload_file(filename=ProjectPaths.OUTPUT_VIDEO,
     #             title='[FUNNY] [gigafunny] [SHOCKING] meme DANK MEGA COMP',

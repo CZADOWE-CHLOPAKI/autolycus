@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from pkg.api_helpers.detect_text import detect_text
 from pkg.api_helpers.reddit_grabber import RedditImageScraper
 from pkg.api_helpers.text_to_speech import text_to_speech
-from pkg.utils.assemble_video import assemble_video
+from pkg.utils import VideoSound
 
 
 def create_video(subreddit: str, image_limit: int, order: str):
@@ -13,7 +13,7 @@ def create_video(subreddit: str, image_limit: int, order: str):
 
     image_paths = RedditImageScraper(subreddit=subreddit,
                                      limit=image_limit, order=order).get_images()
-
+    # TEXT DETECTION + TTS
     for path in image_paths:
         text = detect_text(path["image_path"])
         text = text.replace("\n", " ", -1)
@@ -21,7 +21,7 @@ def create_video(subreddit: str, image_limit: int, order: str):
         if text != "":
             text_to_speech(text, path["root_path"])
 
-    assemble_video(image_paths)
+    VideoSound(image_paths).create()
 
     # upload_file(filename=ProjectPaths.OUTPUT_VIDEO,
     #             title='[FUNNY] [gigafunny] [SHOCKING] meme DANK MEGA COMP',
