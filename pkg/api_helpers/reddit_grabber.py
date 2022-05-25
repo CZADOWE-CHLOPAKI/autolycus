@@ -5,6 +5,7 @@ import praw
 
 from pkg.config.config import REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET
 from pkg.utils.utils import download
+from datetime import datetime
 
 
 class RedditImageScraper:
@@ -13,14 +14,17 @@ class RedditImageScraper:
         self.limit = limit
         self.order = order
         self.nsfw = nsfw
-        self.path = f'images/{self.sub}/'
         self.reddit = praw.Reddit(client_id=REDDIT_CLIENT_ID,
                                   client_secret=REDDIT_CLIENT_SECRET,
                                   user_agent='reddit image downloader')
 
+    def get_path(self):
+        today = datetime.now().strftime('%Y-%m-%d')
+        return f'images/{today}/{self.sub}/'
+
     def does_submission_pass_rules(self, submission):
         return not submission.stickied and submission.over_18 == self.nsfw \
-               and submission.url.endswith(('jpg', 'jpeg', 'png'))
+            and submission.url.endswith(('jpg', 'jpeg', 'png'))
 
     def get_images(self):
         """
@@ -42,20 +46,21 @@ class RedditImageScraper:
                 if self.does_submission_pass_rules(submission):
                     file_name = re.search(
                         '(?s:.*)\w/(.*)', submission.url).group(1)
-                    root_path = self.path + file_name.split('.')[0]
-                    image_path = root_path + "/image." + \
-                                 file_name.split('.')[1]
+                    path = self.get_path() + file_name.split('.')[0]
+                    image_path = path + "/image." + \
+                        file_name.split('.')[1]
                     if not os.path.isfile(image_path):
                         images.append(
-                            {'url': submission.url, 'image_path': image_path, 'root_path': root_path})
+                            {'url': submission.url, 'image_path': image_path, 'path': path})
                         go += 1
                         if go >= self.limit:
                             break
 
             for image in images:
-                os.makedirs(image["root_path"], exist_ok=True)
+                os.makedirs(image["path"], exist_ok=True)
                 download(image["url"], image["image_path"])
 
+        # TODO remove this
         except Exception as e:
             print(e)
         return images

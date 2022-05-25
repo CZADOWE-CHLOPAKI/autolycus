@@ -19,7 +19,7 @@ def create_video(subreddit: str, image_limit: int, order: str):
         text = text.replace("\n", " ", -1)
         text = re.sub(r'[^A-Za-z0-9 "]+', '', text)
         if text != "":
-            text_to_speech(text, path["root_path"])
+            text_to_speech(text, path["path"])
 
     video_sound = VideoSound(image_paths)
     video_sound.create_mp4()

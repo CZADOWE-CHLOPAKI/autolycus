@@ -1,9 +1,10 @@
-This script scrapes example video: https://www.youtube.com/watch?v=kzVpFQMPZQQ
+This script creates videos from memes scraped from reddit.
+Example: https://www.youtube.com/watch?v=kzVpFQMPZQQ
 <br/>
 <br/>
 <img src="https://media.giphy.com/media/LcMyCaWzEbK12CpBgJ/giphy.gif" width="50%" />
 
-run `cat Makefile` to see available commands.
+see makefile for available commands.
 
-`make setup` - setup everything
-`make run` - run everything
+mongodb compass uri:
+`mongodb://root:root@192.168.0.9:27017/`

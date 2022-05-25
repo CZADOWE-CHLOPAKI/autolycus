@@ -85,7 +85,7 @@ class Sound:
         for path in image_paths:
             meme_audio = AudioSegment.silent(start_meme_delay)
 
-            audio_path = path['root_path'] + '/audio.mp3'
+            audio_path = path['path'] + '/audio.mp3'
             meme_audio += AudioSegment.from_mp3(audio_path)
 
             meme_audio += AudioSegment.silent(end_meme_delay)

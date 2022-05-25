@@ -9,22 +9,12 @@ run-cli:
 	   python pkg/cli.py; \
     )
 
-run-back:
-	set -e
-	( \
-       source '$(shell pwd)/env/bin/activate'; \
-	   export PYTHONPATH=./; \
-	   python api/main.py; \
-    )
-
 run-front:
 	cd front && npm run dev
 
 run:
 	docker compose up -d
 	make run-front
-
-
 
 up:
 	make run
@@ -33,8 +23,13 @@ all:
 dev:
 	make run
 
+
+restart:
+	docker-compose restart
+
 freeze:
 	pip freeze > requirements.txt
 
 clean:
-	rm -rf ./images/*
+	rm -rf ./images
+	rm -rf ./output

@@ -12,8 +12,8 @@ from pkg.utils.utils import print_progress_bar
 def main():
     load_dotenv()
 
-    image_limit = 7
-    image_paths = RedditImageScraper(subreddit='me_irl',
+    image_limit = 10
+    image_paths = RedditImageScraper(subreddit='dankmemes',
                                      limit=image_limit, order="hot").get_images()
 
     loading = 0
@@ -27,7 +27,7 @@ def main():
         text = re.sub(r'[^A-Za-z0-9 "]+', '', text)
         # print(f"after: '{text}'")
         if text != "":
-            text_to_speech(text, path["root_path"])
+            text_to_speech(text, path["path"])
 
         loading += 1
         print_progress_bar(loading, image_limit,

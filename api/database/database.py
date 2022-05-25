@@ -28,7 +28,7 @@ class PyObjectId(ObjectId):
 class ImageModel(BaseModel):
     url: str = Field(...)
     image_path: str = Field(...)
-    root_path: str = Field(...)
+    path: str = Field(...)
 
 
 async def add_image(img: ImageModel):

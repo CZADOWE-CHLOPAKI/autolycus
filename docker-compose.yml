@@ -34,5 +34,7 @@ services:
     env_file:
       - .env
     restart: always
+    ports:
+      - "27018:27017"
 
 
