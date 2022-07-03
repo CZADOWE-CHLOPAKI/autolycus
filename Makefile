@@ -23,6 +23,17 @@ all:
 dev:
 	make run
 
+logs_back:
+	docker logs autolycus_back_1 -f
+
+restart_back:
+	docker restart autolycus_back_1
+
+enter_back:
+	docker exec -u root -it autolycus_back_1 bash
+
+rebuild:
+	docker-compose up -d --build
 
 restart:
 	docker-compose restart

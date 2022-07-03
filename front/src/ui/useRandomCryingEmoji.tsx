@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import CryingLaughSrc from '../assets/crying_laugh.png';
+import CryingLaughGifSrc from '../assets/emoji-open-eyed.gif';
 
 const generateRandomCryingEmoji = (count: number, hidden: boolean) => (
   <div className="w-0 h-0 overflow-hidden pointer-events-none" hidden={hidden}>
@@ -14,7 +15,7 @@ const generateRandomCryingEmoji = (count: number, hidden: boolean) => (
             left: `${Math.floor(Math.random() * 100)}vw`,
             width,
           }}
-          src={CryingLaughSrc}
+          src={Math.random() > 0.5 ? CryingLaughSrc : CryingLaughGifSrc}
         />
       );
     })}
@@ -49,7 +50,7 @@ export const useRandomCryingEmoji = () => {
 
           setCryingEmojiCount(newCryingEmojiCount);
         }}
-        min={0}
+        min={5} // nie ma kurwa ze 0 crying emoji
         max={100}
         step={1}
         className="w-full"

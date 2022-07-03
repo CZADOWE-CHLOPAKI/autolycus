@@ -6,6 +6,7 @@ import VideoWrapper from './VideoWrapper';
 function App() {
   const [renderCryingEmojiSlider, renderRandomCryingEmoji, toggleEmoji] =
     useRandomCryingEmoji();
+  const develMode = false; //TODO
 
   return (
     <div>
@@ -17,12 +18,12 @@ function App() {
           </WielkiButon>
         </div>
         <RedditSettings />
-        {renderCryingEmojiSlider()}
+        {!develMode && renderCryingEmojiSlider()}
       </div>
       <div className="grid w-screen h-screen place-content-center">
         <VideoWrapper />
       </div>
-      {renderRandomCryingEmoji()}
+      {!develMode && renderRandomCryingEmoji()}
     </div>
   );
 }
